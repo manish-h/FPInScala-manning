@@ -1,8 +1,6 @@
 package chap2
 
 import scala.annotation.tailrec
-import java.util.stream.IntStream
-import com.sun.org.apache.xalan.internal.xsltc.compiler.ForEach
 
 object NthFibonacci {
 
@@ -22,8 +20,8 @@ object NthFibonacci {
   }                                               //> fib: (n: Int)Int
 
   println(s"Fib n ${fib(1)}")                     //> Fib n 0
-  
-  Stream.iterate(1, 10)(_+1) foreach { x => println(fib(x)) }
+
+  Stream.iterate(1, 10)(_ + 1) foreach { x => println(fib(x)) }
                                                   //> 0
                                                   //| 1
                                                   //| 1
@@ -34,4 +32,5 @@ object NthFibonacci {
                                                   //| 13
                                                   //| 21
                                                   //| 34
+                                              
 }
