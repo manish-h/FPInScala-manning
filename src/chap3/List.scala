@@ -110,9 +110,24 @@ object ListRunner extends App {
 
     // Ex 3.21
     def filterUsingFlatMap[A](as: List[A])(f: A => Boolean): List[A] = flatMap(as)(a => if (f(a)) List(a) else Nil)
-    
+
+    // Ex 3.22
+    def zipAdd(a: List[Int], b: List[Int]): List[Int] = zipWith(a, b)(_ + _)
+
     // Ex 3.23
-//    def zipWith[A,B,C](a: List[A], b: List[B])(f: (A,B)=>C): List[C] = 
+    def zipWith[A, B, C](a: List[A], b: List[B])(f: (A, B) => C): List[C] = (a, b) match {
+      case (_, Nil)                     => Nil
+      case (Nil, _)                     => Nil
+      case (Cons(h1, t1), Cons(h2, t2)) => Cons(f(h1, h2), zipWith(t1, t2)(f))
+    }
+
+    // Ex 3.24
+    @tailrec
+    def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = (sup, sub) match {
+      case (_, Nil)                     => true
+      case (Nil, _)                     => false
+      case (Cons(h1, t1), Cons(h2, t2)) => if (h1 == h2) hasSubsequence(t1, t2) else hasSubsequence(t1, sub)
+    }
 
   }
 
@@ -135,6 +150,8 @@ object ListRunner extends App {
   println("map " + List.map(list)(_ * 2))
   println("filter " + List.filter(list)(_ > 4))
   println("flatMap " + List.flatMap(list)(a => Cons(a, Cons(a * a, Nil))))
+  println("zipAdd " + List.zipAdd(List(1, 3, 5), List(2, 4, 5, 6)))
+  println("has subsquence " + List.hasSubsequence(list, List(3, 4, 7)))
 
   // Ex 3.1
   def evaluateX(): Int = {
